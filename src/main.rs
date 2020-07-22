@@ -2,27 +2,16 @@
 
 #[macro_use] extern crate rocket;
 
-use serde::Serialize;
-use rocket_contrib::json::Json;
+#[path = "libs/database_client.rs"] mod database_client;
+#[path = "libs/routes.rs"] mod routes;
 
-#[derive(Serialize)]
-struct Poscast {
-    id: String,
-    name: String,
-    url: String,
-}
+use futures::executor::block_on;
 
-#[get("/podcasts")]
-fn todo() -> Json<Vec<Poscast>> {
-    let mut podcast_list = Vec::new();
-    podcast_list.push(Poscast {
-        id: String::from("asdf234"),
-        name: String::from("asdf234"),
-        url: String::from("asdf234")
-    });
-    Json(podcast_list)
-}
+use database_client::DatabaseClient;
 
 fn main() {
-    rocket::ignite().mount("/", routes![todo]).launch();
+    let mut database = DatabaseClient::new();
+    block_on(database.connect()).expect("The database connection fails");
+
+    rocket::ignite().mount("/", routes::initialize_routes()).launch();
 }
