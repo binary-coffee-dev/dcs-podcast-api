@@ -1,21 +1,17 @@
-use serde::Serialize;
 use rocket_contrib::json::Json;
-use rocket::Route;
+use rocket::{Route, State};
 
-#[derive(Serialize)]
-pub struct Poscast {
-    id: String,
-    name: String,
-    url: String,
-}
+use crate::database_client::DatabaseClient;
+use crate::models::Podcast;
 
 #[get("/podcasts")]
-pub fn podcasts_method() -> Json<Vec<Poscast>> {
+pub fn podcasts_method(database_client: State<DatabaseClient>) -> Json<Vec<Podcast>> {
     let mut podcast_list = Vec::new();
-    podcast_list.push(Poscast {
-        id: String::from("asdf234"),
-        name: String::from("asdf234"),
-        url: String::from("asdf234")
+    podcast_list.push(Podcast {
+        id: Some(String::from("asdf234")),
+        name: Some(String::from("asdf234")),
+        url: Some(String::from("asdf234")),
+        banner: None
     });
     Json(podcast_list)
 }

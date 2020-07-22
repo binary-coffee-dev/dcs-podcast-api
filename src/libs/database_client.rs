@@ -1,6 +1,5 @@
 use mongodb::{Client, options::ClientOptions, error::Error};
 
-
 pub struct DatabaseClient {
     client: Option<Client>
 }
