@@ -1,16 +1,24 @@
+use async_trait::async_trait;
 use mongodb::{Client, options::ClientOptions, error::Error, Database};
+
+#[async_trait]
+pub trait DatabaseBase {
+    fn new() -> DatabaseClient;
+    async fn connect(&mut self) -> Result<(), Error>;
+}
 
 pub struct DatabaseClient {
     pub db: Option<Database>
 }
 
-impl DatabaseClient {
-    pub fn new() -> DatabaseClient {
+#[async_trait]
+impl DatabaseBase for DatabaseClient {
+    fn new() -> DatabaseClient {
         DatabaseClient {
             db: None
         }
     }
-    pub async fn connect(&mut self) -> Result<(), Error> {
+    async fn connect(&mut self) -> Result<(), Error> {
         // Parse a connection string into an options struct.
         let mut client_options = ClientOptions::parse("mongodb://localhost:27018").await?;
 

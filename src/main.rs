@@ -9,7 +9,7 @@
 
 use futures::executor::block_on;
 
-use database_client::DatabaseClient;
+use database_client::{DatabaseClient, DatabaseBase};
 
 fn main() {
     let mut database = DatabaseClient::new();
