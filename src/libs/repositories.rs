@@ -1,36 +1,29 @@
-extern crate mongodb;
-
-use mongodb::error::Error;
+use futures::stream::StreamExt;
 use mongodb::{
-    bson::{doc, to_bson, from_bson, Bson, bson, oid::ObjectId},
-    options::{FindOptions, FindOneOptions},
+    error::Error,
+    bson::{doc, to_bson, from_bson, Bson, oid::ObjectId},
+    Cursor
 };
 
-use crate::models::Podcast;
-use crate::database_client::{DatabaseClient, DatabaseBase};
+use crate::libs::models::Podcast;
+use crate::libs::database_client::{DatabaseClient, DatabaseBase};
 
 
 pub async fn podcast_list(database_client: &DatabaseClient) -> Result<Vec<Podcast>, Error> {
-    // let collection = database_client.collection("podcast");
+    let collection = database_client.collection("podcast");
 
-    // let filter = doc! { };
-    // let find_options = FindOptions::builder().build();
-    // let mut cursor = collection.find(filter, find_options).await?;
+    let mut cursor: Cursor = collection.find(None, None).await?;
 
     let mut list: Vec<Podcast> = Vec::new();
-
-    // while let Some(result) = cursor.next().await {
-    //     match result {
-    //         Ok(document) => {
-    //             if let Some(title) = document.get("title").and_then(Bson::as_str) {
-    //                 println!("title: {}", title);
-    //             }  else {
-    //                 println!("no title found");
-    //             }
-    //         }
-    //         Err(e) => return Err(e.into()),
-    //     }
-    // }
+    while let Some(result) = cursor.next().await {
+        match result {
+            Ok(document) => {
+                let podcast: Podcast = from_bson(Bson::Document(document)).expect("Error to create Object");
+                list.push(podcast);
+            }
+            Err(e) => return Err(e.into()),
+        }
+    }
 
     Ok(list)
 }
@@ -61,9 +54,9 @@ pub async fn find_podcast_by_id(database_client: &DatabaseClient, id: &String) -
         }
     }
 
-    let result = collection.find_one(doc! { "_id": oid.unwrap() }, FindOneOptions::builder().build()).await?;
+    let result = collection.find_one(doc! { "_id": oid.unwrap() }, None).await?;
 
-    let new_podcast: Podcast = from_bson(bson!{result.as_ref().unwrap()}).expect("Error to create Object");
+    let new_podcast: Podcast = from_bson(Bson::Document(result.unwrap())).expect("Error to create Object");
 
     Ok(new_podcast)
 }

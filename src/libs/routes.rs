@@ -2,9 +2,9 @@ use futures::executor::block_on;
 use rocket_contrib::json::Json;
 use rocket::{Route, State};
 
-use crate::database_client::DatabaseClient;
-use crate::models::Podcast;
-use crate::repositories::{insert_podcast, podcast_list, find_podcast_by_id};
+use crate::libs::database_client::DatabaseClient;
+use crate::libs::models::Podcast;
+use crate::libs::repositories::{insert_podcast, podcast_list, find_podcast_by_id};
 
 #[get("/podcasts")]
 fn podcasts_list(database_client: State<DatabaseClient>) -> Json<Vec<Podcast>> {

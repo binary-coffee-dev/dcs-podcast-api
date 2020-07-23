@@ -2,14 +2,11 @@
 
 #[macro_use] extern crate rocket;
 
-#[path = "libs/database_client.rs"] mod database_client;
-#[path = "libs/routes.rs"] mod routes;
-#[path = "libs/models.rs"] mod models;
-#[path = "libs/repositories.rs"] mod repositories;
+mod libs;
 
+// use async_std::task::block_on;
 use futures::executor::block_on;
-
-use database_client::{DatabaseClient, DatabaseBase};
+use libs::{database_client::{DatabaseClient, DatabaseBase}, routes};
 
 fn main() {
     let mut database = DatabaseClient::new();
