@@ -1,6 +1,6 @@
 use futures::executor::block_on;
 use rocket_contrib::json::Json;
-use rocket::{Route, State};
+use rocket::{Route, State, request::Form};
 
 use crate::database_client::DatabaseClient;
 use crate::models::Podcast;
@@ -18,6 +18,12 @@ fn get_podcast(database_client: State<DatabaseClient>, id: String) -> Json<Podca
     Json(podcast)
 }
 
+#[post("/podcasts", format = "json", data = "<new_podcast>")]
+fn create_podcast(database_client: State<DatabaseClient>, new_podcast: Json<Podcast>) -> Json<Podcast> {
+    let new_podcast = block_on(insert_podcast(&database_client, &new_podcast.into_inner())).expect("Fail to find the podcast by id");
+    Json(new_podcast)
+}
+
 pub fn initialize_routes() -> Vec<Route> {
-    routes![podcasts_list, get_podcast]
+    routes![podcasts_list, create_podcast, get_podcast]
 }

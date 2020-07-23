@@ -1,10 +1,12 @@
 use async_trait::async_trait;
-use mongodb::{Client, options::ClientOptions, error::Error, Database};
+use mongodb::{Client, options::ClientOptions, error::Error, Database, Collection};
 
 #[async_trait]
 pub trait DatabaseBase {
     fn new() -> DatabaseClient;
     async fn connect(&mut self) -> Result<(), Error>;
+
+    fn collection(&self, collection_name: &str) -> Collection;
 }
 
 pub struct DatabaseClient {
@@ -32,5 +34,9 @@ impl DatabaseBase for DatabaseClient {
         self.db = Some(client.as_ref().unwrap().database("podcast_db"));
 
         Ok(())
+    }
+
+    fn collection(&self, collection_name: &str) -> Collection {
+        self.db.as_ref().unwrap().collection(collection_name)
     }
 }
