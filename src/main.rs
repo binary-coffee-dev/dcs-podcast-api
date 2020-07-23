@@ -5,6 +5,7 @@
 #[path = "libs/database_client.rs"] mod database_client;
 #[path = "libs/routes.rs"] mod routes;
 #[path = "libs/models.rs"] mod models;
+#[path = "libs/repositories.rs"] mod repositories;
 
 use futures::executor::block_on;
 
