@@ -6,6 +6,7 @@ use crate::libs::database_client::DatabaseClient;
 use crate::libs::models::Podcast;
 use crate::libs::repositories::{insert_podcast, podcast_list, find_podcast_by_id};
 
+
 #[get("/podcasts")]
 fn podcasts_list(database_client: State<DatabaseClient>) -> Json<Vec<Podcast>> {
     let podcast_list = block_on(podcast_list(&database_client)).expect("Fail to get the list of podcast from the database");
