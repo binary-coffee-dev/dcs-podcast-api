@@ -13,6 +13,13 @@
                 // "--",
                 // "arg1"
             ],
+            "options": {
+                "env": {
+                    "DB_PORT": "27018",
+                    "DB_HOST": "localhost",
+                    "DB_NAME": "podcast_db"
+                }
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
