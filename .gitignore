@@ -1,1 +1,5 @@
+# environment files
+.env
+
+# build files
 /target
