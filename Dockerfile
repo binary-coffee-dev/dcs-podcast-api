@@ -11,13 +11,17 @@ WORKDIR /build/bc-podcast-api
 
 # coping and installing the dependencies
 COPY Cargo.toml Cargo.lock ./
-RUN cargo build --release
+RUN cargo fetch
 
 # coping the app base code and build project
 COPY src ./src
 RUN cargo build --release
 
 FROM rust:1.45.0-slim-stretch
+
+ENV DB_PORT=${DB_PORT}
+ENV DB_HOST=${DB_HOST}
+ENV DB_NAME=${DB_NAME}
 
 COPY --from=build-container /build/bc-podcast-api/target/release/bc-podcast-api .
 

@@ -27,18 +27,11 @@ impl DatabaseBase for DatabaseClient {
         let port = get_env("DB_PORT", "27018");
         let db_name = get_env("DB_NAME", "podcast_db");
 
-        // Parse a connection string into an options struct.
         let mut client_options = ClientOptions::parse(format!("mongodb://{}:{}", host.as_str(), port.as_str()).as_str()).await?;
-
-        // Manually set an option.
         client_options.app_name = Some("Podcast API".to_string());
-
-        // Get a handle to the deployment.
         let client = Some(Client::with_options(client_options)?);
-
-        // Get database instance
         self.db = Some(client.as_ref().unwrap().database(db_name.as_str()));
-
+        
         Ok(())
     }
 
