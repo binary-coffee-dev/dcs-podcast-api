@@ -4,6 +4,15 @@ version = "0.1.0"
 authors = ["Guillermo Gonzalez <ggjnez92@gmail.com>"]
 edition = "2018"
 
+[lib]
+name = "bc_podcast_api"
+path = "src/lib.rs"
+doc = true
+
+[[bin]]
+name = "bc-podcast-api"
+path = "src/main.rs"
+
 [dependencies]
 rocket = "0.4.5"
 serde = { version = "1.0", features = ["derive"] }
