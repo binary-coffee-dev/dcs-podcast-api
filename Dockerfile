@@ -17,7 +17,7 @@ RUN cargo fetch
 COPY src ./src
 RUN cargo build --release
 
-FROM rust:1.45.0-slim-stretch
+FROM debian:buster-slim
 
 ENV DB_PORT=${DB_PORT}
 ENV DB_HOST=${DB_HOST}
