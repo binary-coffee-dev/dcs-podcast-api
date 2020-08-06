@@ -17,7 +17,8 @@
                 "env": {
                     "DB_PORT": "27018",
                     "DB_HOST": "localhost",
-                    "DB_NAME": "podcast_db"
+                    "DB_NAME": "podcast_db",
+                    "JWT_SECRET": "test"
                 }
             },
             "group": {
