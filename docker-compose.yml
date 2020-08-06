@@ -13,6 +13,7 @@ services:
       - DB_PORT=${DB_PORT}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
 
 networks:
   blogdb:
