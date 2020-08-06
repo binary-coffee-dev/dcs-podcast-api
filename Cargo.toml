@@ -15,6 +15,7 @@ path = "src/main.rs"
 
 [dependencies]
 rocket = "0.4.5"
+jsonwebtoken = "7"
 serde = { version = "1.0", features = ["derive"] }
 futures = "0.3"
 async-trait = "0.1.36"
@@ -28,3 +29,7 @@ features = ["json"]
 version = "1.0.0"
 default-features = false
 features = ["async-std-runtime"]
+
+[dev-dependencies]
+regex = "1"
+serde_json = "1.0"
