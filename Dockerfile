@@ -19,11 +19,6 @@ RUN cargo build --release
 
 FROM debian:buster-slim
 
-ENV DB_PORT=${DB_PORT}
-ENV DB_HOST=${DB_HOST}
-ENV DB_NAME=${DB_NAME}
-ENV JWT_SECRET=${JWT_SECRET}
-
 COPY --from=build-container /build/bc-podcast-api/target/release/bc-podcast-api .
 
 USER 1000
