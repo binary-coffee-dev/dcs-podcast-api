@@ -8,3 +8,14 @@ pub struct Podcast {
     pub banner: Option<String>,
     pub url: Option<String>,
 }
+
+impl Default for Podcast {
+    fn default() -> Self {
+        return Podcast {
+            _id: None,
+            name: None,
+            banner: None,
+            url: None
+        }
+    }
+}
