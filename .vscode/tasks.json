@@ -18,7 +18,8 @@
                     "DB_PORT": "27018",
                     "DB_HOST": "localhost",
                     "DB_NAME": "podcast_db",
-                    "JWT_SECRET": "test"
+                    "JWT_SECRET": "test",
+                    "ROCKET_PORT": "4500"
                 }
             },
             "group": {
